@@ -1,6 +1,27 @@
 body {
   background-color: #222;
   color: #fff;
-  font-size: 48px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1.title {
+  font-size: 5rem;
+  margin-bottom: 0;
+}
+
+h2.subtitle {
+  font-size: 3rem;
+  margin-top: 0;
+}
+
+a {
+  color: #eee;
+}
+
+a:hover {
+  color: orange;
+}
+
+ul.apps {
+  font-size: 2rem;
 }

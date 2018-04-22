@@ -4,4 +4,6 @@ from hello_palette.models import Palette
 
 @admin.register(Palette)
 class PaletteAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'colors', 'created_at', 'is_deleted')
+    list_filter = ('is_deleted',)
+    date_hierarchy = 'created_at'
