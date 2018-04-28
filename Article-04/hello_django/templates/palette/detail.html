@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Hello, Django!</title>
+        <link rel="stylesheet" href="/static/main.css">
+    </head>
+    <body>
+        <div>
+            <img src="{{ palette.image.url }}" height=250 />
+        </div>
+
+        <p>{{ palette.colors }}</p>
+
+        <p>
+            <a href="{% url 'palette:delete' palette.pk %}">Delete</a>
+        </p>
+    </body>
+</html>
