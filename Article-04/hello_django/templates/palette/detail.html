@@ -9,7 +9,7 @@
         <img src="{{ palette.image.url }}" height="250" />
     </div>
 
-    {% include_color_boxes palette.colors %}
+    {% include_color_boxes palette %}
 
     <p>
         <a href="{% url 'palette:delete' palette.pk %}">Delete</a>

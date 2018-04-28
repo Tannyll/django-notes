@@ -18,6 +18,10 @@ class Palette(models.Model):
     def __str__(self):
         return self.image.name
 
+    @property
+    def colors_as_list(self):
+        return self.colors.split(',')
+
 
 @receiver(models.signals.post_save, sender=Palette)
 def parse_colors(sender, instance, created, **kwargs):
