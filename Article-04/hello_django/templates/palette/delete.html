@@ -1,21 +1,17 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Hello, Django!</title>
-        <link rel="stylesheet" href="/static/main.css">
-    </head>
-    <body>
-        <div>
-            <img src="{{ palette.image.url }}" height=250 />
-        </div>
+{% extends 'base.html' %}
 
-        <p>Are you sure you want to delete the image?</p>
+{% block title %}{{ block.super }} - Delete #{{ palette.id }}{% endblock %}
 
-        <form action="" method="POST">
-          {% csrf_token %}
-          <button type="submit">Delete</button>
-          <a href="{% url 'palette:detail' palette.pk %}">Cancel</a>
-        </form>
-    </body>
-</html>
+{% block content %}
+    <div>
+        <img src="{{ palette.image.url }}" height=250 />
+    </div>
+
+    <p>Are you sure you want to delete the image?</p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+        <a href="{% url 'palette:detail' palette.pk %}">Cancel</a>
+    </form>
+{% endblock %}

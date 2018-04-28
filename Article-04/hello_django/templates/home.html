@@ -1,17 +1,13 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Hello, Django!</title>
-        <link rel="stylesheet" href="/static/main.css">
-    </head>
-    <body>
-        <h1 class="title">Hello, Django!</h1>
-        <h2 class="subtitle">Applications</h2>
-        <ul class="apps">
-          <li>
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }} - Welcome{% endblock %}
+
+{% block content %}
+    <h1 class="title">Hello, Django!</h1>
+    <h2 class="subtitle">Applications</h2>
+    <ul class="apps">
+        <li>
             <a href="{% url 'palette:new' %}">Palette</a>
-          </li>
-        </ul>
-    </body>
-</html>
+        </li>
+    </ul>
+{% endblock %}
