@@ -1,5 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 
+USER_MONITOR_LIMIT = 10
+
 
 class MonitoringInterval(object):
     MIN_5 = 5 * 60
