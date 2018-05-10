@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext as _
 from extra_views import ModelFormSetView
 
 from hello_uptime.models import Monitor
@@ -22,6 +24,11 @@ class UptimeDashboardView(ModelFormSetView):
         })
         return kwargs
 
-    def form_valid(self, formset):
+    def formset_valid(self, formset):
         formset.save()
-        return super().form_valid(formset)
+        messages.success(self.request, _("The monitors have been updated."))
+        return super().formset_valid(formset)
+
+    def formset_invalid(self, formset):
+        messages.error(self.request, _("The monitors could not be updated, please check the form."))
+        return super().formset_invalid(formset)
