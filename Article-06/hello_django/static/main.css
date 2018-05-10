@@ -38,3 +38,24 @@ ul.apps {
   background-color: #555;
   margin-right: 20px;
 }
+
+ul.messages {
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul.messages li {
+    margin-bottom: 5px;
+    padding: 15px 20px;
+    background-color: #eaeaea;
+    color: #222;
+}
+
+ul.messages li.error {
+    background-color: #f7e4e1;
+}
+
+ul.messages li.success {
+    background-color: #e1faea;
+}
