@@ -22,6 +22,6 @@ class UptimeDashboardView(ModelFormSetView):
         })
         return kwargs
 
-    def form_valid(self, formset):
+    def formset_valid(self, formset):
         formset.save()
-        return super().form_valid(formset)
+        return super().formset_valid(formset)
