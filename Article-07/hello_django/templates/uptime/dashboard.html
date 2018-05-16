@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{{ block.super }} - Uptime{% endblock %}
+
+{% block content %}
+    <form action="{% url 'uptime:dashboard' %}" method="POST">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table>
+            {% for form in formset %}
+                <tr>
+                    <th></th>
+                    <td>{% blocktrans with number=forloop.counter %}Monitor {{ number }}{% endblocktrans %}</td>
+                </tr>
+                {{ form.as_table }}
+            {% endfor %}
+            <tr>
+                <th></th>
+                <td><button type="submit">{% trans "Save" %}</button></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
