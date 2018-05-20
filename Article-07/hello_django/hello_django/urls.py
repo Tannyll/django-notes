@@ -23,5 +23,6 @@ urlpatterns = [
     path('', view=HomeView.as_view(), name='home'),
     path('palette/', include('hello_palette.urls', namespace='palette')),
     path('uptime/', include('hello_uptime.urls', namespace='uptime')),
+    path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='auth')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

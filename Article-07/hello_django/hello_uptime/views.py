@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from extra_views import ModelFormSetView
@@ -7,14 +8,14 @@ from hello_uptime.models import Monitor
 from hello_uptime.utils import USER_MONITOR_LIMIT
 
 
-class UptimeDashboardView(ModelFormSetView):
+class UptimeDashboardView(LoginRequiredMixin, ModelFormSetView):
     fields = ('url', 'interval', 'is_active')
     model = Monitor
     success_url = reverse_lazy('uptime:dashboard')
     template_name = 'uptime/dashboard.html'
 
     def get_queryset(self):
-        return Monitor.objects.order_by('id')
+        return Monitor.objects.filter(user=self.request.user).order_by('id')
 
     def get_factory_kwargs(self):
         kwargs = super().get_factory_kwargs()
@@ -25,7 +26,10 @@ class UptimeDashboardView(ModelFormSetView):
         return kwargs
 
     def formset_valid(self, formset):
-        formset.save()
+        monitors = formset.save()
+        for monitor in monitors:
+            monitor.user = self.request.user
+            monitor.save()
         messages.success(self.request, _("The monitors have been updated."))
         return super().formset_valid(formset)
 
