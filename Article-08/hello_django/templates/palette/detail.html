@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load palette_tags %}
+
+{% block title %}{{ block.super }} - Detail #{{ palette.id }}{% endblock %}
+
+{% block content %}
+    <div>
+        <img src="{{ palette.image.url }}" height="250" />
+    </div>
+
+    {% include_color_boxes palette %}
+
+    <p>
+        <a href="{% url 'palette:delete' palette.pk %}">Delete</a>
+    </p>
+{% endblock %}
