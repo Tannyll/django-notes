@@ -8,14 +8,27 @@
     <form action="{% url 'uptime:dashboard' %}" method="POST">
         {% csrf_token %}
         {{ formset.management_form }}
-        <table>
-            {% for form in formset %}
+
+        {% for form in formset %}
+            <table class="monitor-form">
                 <tr>
                     <th></th>
                     <td>{% blocktrans with number=forloop.counter %}Monitor {{ number }}{% endblocktrans %}</td>
                 </tr>
+                {% if form.instance.pk %}
+                    <tr>
+                        <th>{% trans "Status" %}:</th>
+                        <td class="status-{{ form.instance.status }}">{{ form.instance.get_status_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Checked at" %}:</th>
+                        <td>{{ form.instance.checked_at }}</td>
+                    </tr>
+                {% endif %}
                 {{ form.as_table }}
-            {% endfor %}
+            </table>
+        {% endfor %}
+        <table class="monitor-buttons">
             <tr>
                 <th></th>
                 <td><button type="submit">{% trans "Save" %}</button></td>
