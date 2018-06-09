@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }} - Delete #{{ palette.id }}{% endblock %}
+
+{% block content %}
+    <div>
+        <img src="{{ palette.image.url }}" height=250 />
+    </div>
+
+    <p>Are you sure you want to delete the image?</p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+        <a href="{% url 'palette:detail' palette.pk %}">Cancel</a>
+    </form>
+{% endblock %}
