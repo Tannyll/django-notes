@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'hello_palette',
     'hello_uptime',
 ]
@@ -141,3 +142,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Auth settings
 LOGIN_REDIRECT_URL = reverse_lazy('uptime:dashboard')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
+
+# Celery settings
+CELERY_BROKER_URL = 'amqp'
+CELERY_IMPORTS = [
+    'hello_uptime.tasks'
+]
+
+# Email settings
+DEFAULT_FROM_EMAIL = 'hello_django@localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
