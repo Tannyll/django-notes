@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -17,6 +17,11 @@ from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env_path = os.path.join(BASE_DIR, 'env.json')
+if not os.path.exists(env_path):
+    env_path = os.path.join(BASE_DIR, 'conf', 'env.dev.json')
+with open(env_path, 'r') as env_file:
+    env = json.loads(env_file.read())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -25,9 +30,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'heh65b*9j3y4ro1n-hdrc$^cq9052g0c0lto)a%6u26#t-lao-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env['DEBUG']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env['ALLOWED_HOSTS']
 
 
 # Application definition
@@ -135,9 +140,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = env['STATIC_ROOT']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = env['MEDIA_ROOT']
 
 # Auth settings
 LOGIN_REDIRECT_URL = reverse_lazy('uptime:dashboard')

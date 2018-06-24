@@ -3,23 +3,14 @@ version: '3'
 services:
   web:
     build: .
-    command: python manage.py runserver 0:8000
-    volumes:
-      - .:/code
-    ports:
-      - 8000:8000
   celery:
     build: .
     command: celery worker -l info -A hello_django
-    volumes:
-      - .:/code
     depends_on:
       - amqp
   celery-beat:
     build: .
     command: celery beat -l info -A hello_django --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    volumes:
-      - .:/code
     depends_on:
       - amqp
       - celery

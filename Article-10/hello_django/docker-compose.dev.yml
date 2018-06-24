@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    command: python manage.py runserver 0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+  celery:
+    volumes:
+      - .:/code
+  celery-beat:
+    volumes:
+      - .:/code

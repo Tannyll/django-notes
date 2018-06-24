@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+     - ./conf/nginx.prod.conf:/etc/nginx/nginx.conf
+     - ./assets/static:/assets/static
+     - ./assets/media:/assets/media
+    restart: always
+    ports:
+      - 80:80
+  web:
+    command: gunicorn hello_django.wsgi:application -b 0:8000
+    entrypoint: /code/entrypoint.sh
+    restart: always
+    volumes:
+      - ./db.sqlite3:/code/db.sqlite3
+      - ./assets/static:/assets/static
+      - ./assets/media:/assets/media
+  celery:
+    restart: always
+  celery-beat:
+    restart: always
+  amqp:
+    restart: always
