@@ -13,11 +13,7 @@ services:
   celery-beat:
     volumes:
       - .:/code
-  test-web1:
+  web1.test:
     image: nginx:alpine
-    ports:
-      - 8001:80
-  test-web2:
+  web2.test:
     image: nginx:alpine
-    ports:
-      - 8002:80
