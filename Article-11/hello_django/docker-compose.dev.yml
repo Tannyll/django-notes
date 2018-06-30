@@ -7,9 +7,11 @@ services:
       - .:/code
     ports:
       - 8000:8000
-  celery:
-    volumes:
-      - .:/code
-  celery-beat:
-    volumes:
-      - .:/code
+  test-web1:
+    image: nginx:alpine
+    ports:
+      - 8001:80
+  test-web2:
+    image: nginx:alpine
+    ports:
+      - 8002:80
