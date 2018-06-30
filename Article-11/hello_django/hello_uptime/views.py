@@ -9,7 +9,7 @@ from hello_uptime.utils import USER_MONITOR_LIMIT
 
 
 class UptimeDashboardView(LoginRequiredMixin, ModelFormSetView):
-    fields = ('url', 'interval', 'is_active')
+    fields = ('monitor_url', 'interval', 'is_active')
     model = Monitor
     success_url = reverse_lazy('uptime:dashboard')
     template_name = 'uptime/dashboard.html'

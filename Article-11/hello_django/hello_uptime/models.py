@@ -8,7 +8,7 @@ class Monitor(models.Model):
     user = models.ForeignKey(
         verbose_name=_("User"), to=settings.AUTH_USER_MODEL, related_name='monitors', on_delete=models.CASCADE,
         null=True)
-    url = models.URLField(verbose_name=_("URL"))
+    monitor_url = models.URLField(verbose_name=_("URL"))
     interval = models.PositiveSmallIntegerField(
         verbose_name=_("Monitoring interval"), choices=MonitoringInterval.get_choices(),
         default=MonitoringInterval.get_default())
@@ -21,7 +21,7 @@ class Monitor(models.Model):
         verbose_name = _("Monitor")
         verbose_name_plural = _("Monitors")
         ordering = ('-created_at',)
-        unique_together = ('user', 'url')
+        unique_together = ('user', 'monitor_url')
 
     def __str__(self):
-        return self.url
+        return self.monitor_url

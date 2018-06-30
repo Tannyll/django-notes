@@ -35,11 +35,11 @@ class Command(BaseCommand):
 
         urls = options['urls']
         if urls:
-            available_monitors = available_monitors.filter(url__in=urls)
-        urls = available_monitors.values_list('url', flat=True).distinct().order_by('url')
+            available_monitors = available_monitors.filter(monitor_url__in=urls)
+        urls = available_monitors.values_list('monitor_url', flat=True).distinct().order_by('monitor_url')
 
         for url in urls:
-            monitors = Monitor.objects.filter(is_active=True, url=url)
+            monitors = Monitor.objects.filter(is_active=True, monitor_url=url)
             self.stdout.write(self.style.WARNING("{} - {} monitor(s)".format(url, monitors.count())), ending=': ')
 
             try:
@@ -59,9 +59,10 @@ class Command(BaseCommand):
             for url in offline_urls:
                 self.mail_clients(url, available_monitors)
 
-    def mail_clients(self, url, available_monitors):
+    @staticmethod
+    def mail_clients(url, available_monitors):
         subject = "[Hello Uptime] Monitor is DOWN: {}".format(url)
-        for monitor in available_monitors.filter(url=url, user__isnull=False):
+        for monitor in available_monitors.filter(monitor_url=url, user__isnull=False):
             message_list = [
                 "Hi {},".format(monitor.user.get_full_name()),
                 "The monitor ({}) is currently DOWN.".format(url),
