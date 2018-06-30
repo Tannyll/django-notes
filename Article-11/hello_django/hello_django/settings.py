@@ -150,6 +150,63 @@ MEDIA_ROOT = env['MEDIA_ROOT']
 LOGIN_REDIRECT_URL = reverse_lazy('uptime:dashboard')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
+# Logging settings
+LOG_DIR = env['LOG_DIR']
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'django.log'),
+            'when': 'D',  # daily
+            'backupCount': 100,  # 100 days
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'level': 'ERROR',
+            'handlers': ['console', 'file', 'mail_admins'],
+            'propagate': True,
+        },
+        'hello_uptime': {
+            'level': 'INFO',
+            'handlers': ['console', 'file', 'mail_admins'],
+            'propagate': True,
+        },
+    },
+}
+
 # Celery settings
 CELERY_BROKER_URL = 'amqp'
 CELERY_IMPORTS = [
