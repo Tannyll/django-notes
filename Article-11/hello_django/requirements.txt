@@ -2,6 +2,7 @@ Django==2.0.5
 Pillow==5.1.0
 celery==4.1.1
 colorific==0.3
+djangorestframework==3.8.2
 django_celery_beat==1.1.1
 django-extra-views==0.11.0
 gunicorn==19.8.1
