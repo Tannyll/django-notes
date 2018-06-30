@@ -17,7 +17,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+
 from hello_django.views import HomeView
+from hello_uptime.api.routers import uptime_router
 
 urlpatterns = [
     path('', view=HomeView.as_view(), name='home'),
@@ -25,4 +27,7 @@ urlpatterns = [
     path('uptime/', include('hello_uptime.urls', namespace='uptime')),
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='auth')),
     path('admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/web/', include(uptime_router.urls)),
+    path('api/web/auth/', include('rest_framework.urls', namespace='api-auth'))
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
