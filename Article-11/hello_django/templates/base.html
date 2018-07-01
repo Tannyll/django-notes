@@ -1,11 +1,11 @@
-{% load i18n %}
+{% load i18n static %}
 
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>{% block title %}Hello{% endblock %}</title>
-        <link rel="stylesheet" href="/static/main.css">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
     </head>
     <body>
         {% block header %}
@@ -28,5 +28,13 @@
         {% endif %}
 
         {% block content %}{% endblock %}
+
+        {% block scripts %}
+            <script>
+                var helloDjango = {
+                    'urls': {}
+                }
+            </script>
+        {% endblock %}
     </body>
 </html>

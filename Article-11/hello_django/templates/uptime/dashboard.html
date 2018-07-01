@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{{ block.super }} - Uptime{% endblock %}
 
@@ -10,7 +10,7 @@
         {{ formset.management_form }}
 
         {% for form in formset %}
-            <table class="monitor-form">
+            <table class="monitor-form"{% if form.instance.pk %} id="monitor-{{ form.instance.pk }}"{% endif %}>
                 <tr>
                     <th></th>
                     <td>{% blocktrans with number=forloop.counter %}Monitor {{ number }}{% endblocktrans %}</td>
@@ -18,11 +18,15 @@
                 {% if form.instance.pk %}
                     <tr>
                         <th>{% trans "Status" %}:</th>
-                        <td class="status-{{ form.instance.status }}">{{ form.instance.get_status_display }}</td>
+                        <td class="status status-{{ form.instance.status }}">
+                            {{ form.instance.get_status_display }}
+                        </td>
                     </tr>
                     <tr>
                         <th>{% trans "Checked at" %}:</th>
-                        <td>{{ form.instance.checked_at }}</td>
+                        <td class="checked-at">
+                            {{ form.instance.checked_at }}
+                        </td>
                     </tr>
                 {% endif %}
                 {{ form.as_table }}
@@ -35,4 +39,12 @@
             </tr>
         </table>
     </form>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        helloDjango.urls['apiMonitorList'] = '{% url 'api-web:monitor-list' %}';
+    </script>
+    <script src="{% static 'uptime.js' %}" defer></script>
 {% endblock %}
