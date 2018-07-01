@@ -27,7 +27,7 @@ urlpatterns = [
     path('uptime/', include('hello_uptime.urls', namespace='uptime')),
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='auth')),
     path('admin/', admin.site.urls),
-    path('api/web/', include(uptime_router.urls)),
+    path('api/web/', include((uptime_router.urls, 'api-web'), namespace='api-web')),
     path('api/web/auth/', include('rest_framework.urls', namespace='api-auth'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
